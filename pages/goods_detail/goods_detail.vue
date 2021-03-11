@@ -1,0 +1,168 @@
+<template>
+	<view class="goods_detail">
+		<swiper indicator-dots>
+			<swiper-item v-for="(item,index) in pircture" :key='index'>
+				<image :src="item"></image>
+			</swiper-item>
+		</swiper>
+		<view class="Price">
+			<view class="new_Price">{{goods_data.new_Price}}</view>
+			<view class="old_Price">{{goods_data.old_Price}}</view>
+		</view>
+		<view class="title">
+			{{goods_data.title}}
+		</view>
+		<view class="img">
+			<image :src="goods_data.src"></image>
+		</view>
+		<view class="goods_nav">
+			<uni-goods-nav :fill="true" :options="options" :buttonGroup="buttonGroup" @click="onClick"
+				@buttonClick="buttonClick" />
+		</view>
+	</view>
+</template>
+
+<script>
+	import uniGoodsNav from '../../uni_modules/uni-goods-nav/components/uni-goods-nav/uni-goods-nav.vue'
+	export default {
+		data() {
+			return {
+				pircture: [],
+				goods_data: [],
+				options: [{
+					icon: '../../static/goods_detail/service.png',
+					text: '客服'
+				}, {
+					icon: '../../static/goods_detail/shop.png',
+					text: '店铺',
+					info: 2,
+					infoBackgroundColor: '#007aff',
+					infoColor: "red"
+				}, {
+					icon: '../../static/goods_detail/cart.png',
+					text: '购物车',
+					info: 2
+				}],
+				buttonGroup: [{
+						text: '加入购物车',
+						backgroundColor: '#ff0000',
+						color: '#fff'
+					},
+					{
+						text: '立即购买',
+						backgroundColor: '#ffa200',
+						color: '#fff'
+					}
+				]
+			}
+		},
+		methods: {
+			async getSwipers(id) { //图片轮播
+				const res = await this.$myRequsest({ //使用封装方法
+					url: '/E_Shop/Pro_details/' + id
+				})
+				this.pircture = res.data.data[0].url
+				const data = await this.$myRequsest({
+					url: '/E_Shop/goods_details/' + id
+				})
+				this.goods_data = data.data.data[0]
+				// console.log(this.goods_data)
+			},
+			onClick(e) {
+				uni.showToast({
+					title: `点击${e.content.text}`,
+					icon: 'none'
+				})
+				if(e.index===2){
+					uni.switchTab({
+						url:'/pages/cart/cart'
+					})
+				}
+			},
+			buttonClick(e) {
+				console.log(e)
+				this.options[2].info++
+			}
+		},
+		onLoad(options) {
+			this.getSwipers(options.id)
+		},
+		components: {
+			uniGoodsNav
+		},
+		created() {
+			// #ifdef MP-WEIXIN
+			this.options.map((e)=>{
+				e.icon='../../'+e.icon
+			})
+			console.log("微信")
+			// #endif
+			
+		}
+	}
+</script>
+
+<style lang="scss">
+	.goods_detail {
+		background-color: #eee;
+
+		swiper {
+			height: 700rpx;
+
+			image {
+				width: 100%;
+				height: 100%;
+			}
+		}
+
+		.Price {
+			display: flex;
+			background-color: #fff;
+			padding: 20rpx 0;
+
+			.new_Price {
+				color: $shop-color;
+				font-size: 50rpx;
+			}
+
+			.old_Price {
+				color: #ccc;
+				text-decoration: line-through;
+				font-size: 40rpx;
+				margin-top: 10rpx;
+				margin-left: 10rpx;
+			}
+		}
+
+		.title {
+			background-color: #fff;
+			padding: 20rpx 0;
+		}
+
+		.img {
+			padding-bottom: 100rpx;
+			height: 1000rpx;
+			background-color: #fff;
+
+			image {
+				height: 100%;
+				width: 100%;
+			}
+		}
+
+		.goods_nav {
+			position: fixed;
+			bottom: 0;
+			width: 100%;
+			// // #ifndef APP-NVUE
+			// display: flex;
+			// // #endif  
+			// background-color: #FFFFFF;
+			// text-align: center;
+			// width: 100%;
+			// position: fixed;
+			// bottom: 0;
+			// flex-direction: row;
+		}
+	}
+</style>

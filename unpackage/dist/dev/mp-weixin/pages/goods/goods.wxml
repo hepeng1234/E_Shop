@@ -1,0 +1,1 @@
+<view class="goods_list"><product-list vue-id="576f0adc-1" goods="{{goods}}" data-event-opts="{{[['^sonFun',[['goDetil']]]]}}" bind:sonFun="__e" bind:__l="__l"></product-list><view class="{{[hot_tit]}}">刷新中...</view><view class="{{[hot_di]}}">---到底啦---</view></view>

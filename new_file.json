@@ -1,0 +1,24 @@
+{
+	"message": "访问成功",
+	"status": "0",
+	"data": [
+		{
+			"id":0,
+			"price":9699,
+			"title":"三星 Galaxy S21 Ultra 5G（SM-G9980）双模5G 骁龙888 1.08亿像素 120Hz护目屏 支持Spen 12G+256G 幽夜黑",
+			"src":"//img12.360buyimg.com/babel/s320x320_jfs/t1/165958/37/8066/92796/6039c1aeE4605cb3a/0050a6adbb620db5.jpg!cc_320x320"
+		},
+		{
+			"id":1,
+			"price":8699,
+			"title":"荣耀V40 5G 超级快充 5000万超感光影像 8GB+128GB幻夜黑 移动联通电信5G 双卡双待",
+			"src":"//img12.360buyimg.com/babel/s320x320_jfs/t1/155037/22/15547/65194/6009377aE8ebd6b65/a91d58b1b57c1a71.jpg!cc_320x320"
+		},
+		{
+			"id":2,
+			"price":7699,
+			"title":"荣耀30 Pro 50倍远摄 麒麟990 5G 4000万超感光摄影 3200W美颜自拍 游戏手机 全网通版8GB+128GB 绿野仙踪",
+			"src":"//img12.360buyimg.com/babel/s320x320_jfs/t1/97062/37/18673/150018/5e95e558E852685b4/d86fc2025388e55a.jpg!cc_320x320"
+		}
+	]
+}

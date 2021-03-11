@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "商品列表",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "product-list": "/components/Product_information_list"
+  }
+}
