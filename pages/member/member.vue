@@ -4,6 +4,9 @@
 			<image mode="aspectFill" src="https://tva2.sinaimg.cn/large/0072Vf1pgy1fodqowkp8sj31fy10hhdt.jpg"></image>
 			<text>用户123</text>
 		</view>
+		<view @click="scanning" class="scanningImg">
+			<image mode="aspectFit" src="../../static/member/scanning.png"></image>
+		</view>
 		<view class="center">
 			<view class="center_icon">
 				<image src="../../static/member/payment.png"></image>
@@ -36,7 +39,17 @@
 			setting() {
 				console.log("设置")
 				uni.navigateTo({
-					url:'/pages/setting/setting'
+					url: '/pages/setting/setting'
+				})
+			},
+			scanning() {
+				console.log("扫码")
+				uni.scanCode({
+					scanType: ['qrCode'],
+					success: (res) => {
+						uni.showToast({title:res.scanType})
+						uni.showToast({title:res.result})
+					}
 				})
 			}
 		}
@@ -61,6 +74,19 @@
 			text {
 				font-size: 40rpx;
 				margin-left: 40rpx;
+			}
+		}
+
+		.scanningImg {
+			width: 80rpx;
+			height: 80rpx;
+			position: absolute;
+			top: 0;
+			right: 0;
+
+			image {
+				width: 100%;
+				height: 100%;
 			}
 		}
 

@@ -44,6 +44,17 @@
   font-size: 40rpx;
   margin-left: 40rpx;
 }
+.member .scanningImg {
+  width: 80rpx;
+  height: 80rpx;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.member .scanningImg image {
+  width: 100%;
+  height: 100%;
+}
 .member .center {
   height: 200rpx;
   display: -webkit-box;

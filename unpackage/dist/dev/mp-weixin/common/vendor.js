@@ -7870,9 +7870,9 @@ module.exports = g;
 
 /***/ }),
 /* 4 */
-/*!**********************************!*\
-  !*** D:/web作业/E_Shop/pages.json ***!
-  \**********************************/
+/*!*************************************************!*\
+  !*** D:/webobject/jingdong/jingdong/pages.json ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -8013,9 +8013,9 @@ function normalizeComponent (
 
 /***/ }),
 /* 11 */
-/*!***********************************!*\
-  !*** D:/web作业/E_Shop/util/api.js ***!
-  \***********************************/
+/*!**************************************************!*\
+  !*** D:/webobject/jingdong/jingdong/util/api.js ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

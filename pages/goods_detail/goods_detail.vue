@@ -6,14 +6,14 @@
 			</swiper-item>
 		</swiper>
 		<view class="Price">
-			<view class="new_Price">{{goods_data.new_Price}}</view>
-			<view class="old_Price">{{goods_data.old_Price}}</view>
+			<view class="new_Price">{{goods_data.newPrice}}</view>
+			<view class="old_Price">{{goods_data.oldPrice}}</view>
 		</view>
 		<view class="title">
-			{{goods_data.title}}
+			{{goods_data.msg}}
 		</view>
 		<view class="img">
-			<image :src="goods_data.src"></image>
+			<image :src="infoSrc"></image>
 		</view>
 		<view class="goods_nav">
 			<uni-goods-nav :fill="true" :options="options" :buttonGroup="buttonGroup" @click="onClick"
@@ -29,6 +29,7 @@
 			return {
 				pircture: [],
 				goods_data: [],
+				infoSrc:"",
 				options: [{
 					icon: '../../static/goods_detail/service.png',
 					text: '客服'
@@ -58,14 +59,23 @@
 		},
 		methods: {
 			async getSwipers(id) { //图片轮播
-				const res = await this.$myRequsest({ //使用封装方法
-					url: '/E_Shop/Pro_details/' + id
+				// const res = await this.$myRequsest({ //使用封装方法
+				// 	url: '/E_Shop/Pro_details/' + id
+				// })
+				// const data = await this.$myRequsest({
+				// 	url: '/E_Shop/goods_details/' + id
+				// })
+				let res=await this.$myRequsest({
+					url:'/api/CarouselPicture/ProductDetailed',
+					data:{
+						id:id
+					}
 				})
-				this.pircture = res.data.data[0].url
-				const data = await this.$myRequsest({
-					url: '/E_Shop/goods_details/' + id
-				})
-				this.goods_data = data.data.data[0]
+				this.pircture = res.data.productCarousel1
+				this.goods_data=res.data.getProductInfo
+				this.infoSrc=res.data.infoSrc
+				console.log(res.data)
+				// this.goods_data = data.data.data[0]
 				// console.log(this.goods_data)
 			},
 			onClick(e) {

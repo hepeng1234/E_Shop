@@ -30,6 +30,9 @@
 				title: 'Hello',
 				goods: [],
 				a: true,
+				pageNo:0,
+				pageSize:5,
+				count:0,
 				pircture: [],
 				hot_tit: "hot_tit1",
 				hot_di: 'hot_di1',
@@ -58,20 +61,31 @@
 		},
 		onLoad() {
 			this.getSwipers()
-			this.getHotGoods()
+			this.getHotGoods(this.pageNo,this.pageSize)
 		},
 		methods: {
 			async getSwipers() { //图片轮播
-				const res = await this.$myRequsest({ //使用封装方法
-					url: '/E_Shop/CarouselPicture'
+				let res = await this.$myRequsest({ //使用封装方法
+					// url: '/E_Shop/CarouselPicture'
+					url:'/api/CarouselPicture/CarouselPicture'
 				})
-				this.pircture = res.data.data
+				this.pircture = res.data
 			},
-			async getHotGoods() { //商品信息
-				const res = await this.$myRequsest({
-					url: '/E_Shop/Product_information'
+			async getHotGoods(pageNo,pageSize) { //商品信息
+				let res = await this.$myRequsest({
+					url: '/api/CarouselPicture/ProductInfo',
+					data:{
+						pageNo,
+						pageSize
+					}
 				})
-				this.goods = res.data.data
+				this.count=res.data.count
+				if(this.goods.length==0){
+					this.goods=res.data.info;
+				}else{
+					this.goods.push(...res.data.info)
+				}
+				console.log(this.goods)
 			},
 			navItemClick(url) { //导航点击的处理函数
 				uni.navigateTo({
@@ -92,11 +106,12 @@
 			console.log("页面触底了")
 			if (this.a) {
 				this.a = false
-				if (this.goods.length < 40) {
+				if (this.goods.length < this.count) {
 					this.hot_tit = "hot_tit"
 					setTimeout(() => {
 						this.hot_tit = "hot_tit1"
-						this.goods.push(...this.goods)
+						this.pageNo+=5
+						this.getHotGoods(this.pageNo,this.pageSize)
 						this.a = true
 					}, 2000)
 				} else {

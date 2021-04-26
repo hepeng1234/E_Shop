@@ -1,13 +1,13 @@
 <template>
 	<view class="goods_list">
-		<view class="goods_item" v-for="(item,index) in goods" :key="index" @click="navigator(index)">
-			<image :src="item.url"></image>
+		<view class="goods_item" v-for="item in goods" :key="item.id" @click="navigator(item.proDetailsId)">
+			<image :src="item.pictureUrl"></image>
 			<view class="name">
 				{{item.msg}}
 			</view>
 			<view class="price">
-				<text>{{item.price.new_price}}</text>
-				<text>{{item.price.old_price}}</text>
+				<text>{{item.newPrice}}</text>
+				<text>{{item.oldPrice}}</text>
 			</view>
 		</view>
 	</view>

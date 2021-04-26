@@ -71,7 +71,7 @@
 			}
 
 		}
-	],
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "京东",
