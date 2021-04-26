@@ -15,9 +15,10 @@
 		methods: {
 			async newsDate() {
 				const res = await this.$myRequsest({
-					url: "/E_Shop/news"
+					url: "/api/CarouselPicture/New"
 				})
-				this.data = res.data.data
+				// console.log(res.data)
+				this.data = res.data
 			},
 			goDetail(data){
 				var url='/pages/news_detail/news_detail?id='+data

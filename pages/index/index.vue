@@ -66,9 +66,9 @@
 		methods: {
 			async getSwipers() { //图片轮播
 				let res = await this.$myRequsest({ //使用封装方法
-					// url: '/E_Shop/CarouselPicture'
 					url:'/api/CarouselPicture/CarouselPicture'
 				})
+				console.log(res.data)
 				this.pircture = res.data
 			},
 			async getHotGoods(pageNo,pageSize) { //商品信息
@@ -85,7 +85,6 @@
 				}else{
 					this.goods.push(...res.data.info)
 				}
-				console.log(this.goods)
 			},
 			navItemClick(url) { //导航点击的处理函数
 				uni.navigateTo({

@@ -1,9 +1,9 @@
 <template>
 	<view class="news_detail">
-		<text class="title">{{data.title}}</text>
+		<text class="title">{{data.news1.title}}</text>
 		<view class="info">
-			<text v-if="data.time">
-				发表时间：{{data.time |formatDate}}
+			<text v-if="data.news1.time">
+				发表时间：{{data.news1.time |formatDate}}
 			</text>
 		</view>
 		<view class="content">
@@ -16,16 +16,24 @@
 	export default {
 		data() {
 			return {
-				data:{}
+				data:{
+					content:"",
+					news1:{
+						title:"数据加载中，请稍等",
+						time:""
+					}
+				}
 			}
 		},
 		methods: {
 			async getNewsDetail(id){
 				const res=await this.$myRequsest({
-					url:'/E_Shop/details_page/'+id
+					url:'/api/CarouselPicture/GetNewDetail',
+					data:{
+						id
+					}
 				})
-				this.data=res.data.data[0]
-				console.log(this.data)
+				this.data=res.data
 			}
 		},
 		onLoad(options) {

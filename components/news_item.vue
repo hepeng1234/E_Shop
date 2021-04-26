@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<view @click="sonFun(item.id)" class="news_item" v-for="item in news" :key="item.id">
+		<view @click="sonFun(item.contentId)" class="news_item" v-for="item in news" :key="item.id">
 			<image :src="item.url"></image>
 			<view class="right">
 				<view class="tit">{{item.title}}</view>
