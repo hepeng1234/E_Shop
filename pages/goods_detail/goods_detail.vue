@@ -69,8 +69,6 @@
 				this.pircture = res.data.productCarousel1
 				this.goods_data=res.data.getProductInfo
 				this.infoSrc=res.data.infoSrc
-				// this.goods_data = data.data.data[0]
-				// console.log(this.goods_data)
 			},
 			async getCartCount(){
 				let res=await this.$myRequsest({

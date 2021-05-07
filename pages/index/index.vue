@@ -78,7 +78,7 @@
 						pageSize
 					}
 				})
-				// this.count=res.data.data.count
+				this.count=res.data.count
 				if(this.goods.length==0){
 					this.goods=res.data.info;
 				}else{

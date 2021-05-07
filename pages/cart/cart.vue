@@ -116,6 +116,7 @@
 			}
 		},
 		onLoad() {
+			console.log(456)
 			this.getCartData()
 		},
 		created() {},

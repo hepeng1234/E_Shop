@@ -31,7 +31,6 @@
 				const res = await this.$myRequsest({
 					url: '/api/CarouselPicture/NavbarLeft'
 				})
-				console.log(res)
 				this.date = res.data
 			},
 			async leftClickHandle(index=0, item=1) {
@@ -43,7 +42,6 @@
 						NavbarLeftId:item
 					}
 				})
-				console.log(res)
 				this.urlDate = res.data
 				this.ifitem=true
 			},
