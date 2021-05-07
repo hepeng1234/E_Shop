@@ -6,8 +6,8 @@
 			</swiper-item>
 		</swiper>
 		<view class="Price">
-			<view class="new_Price">{{goods_data.newPrice}}</view>
-			<view class="old_Price">{{goods_data.oldPrice}}</view>
+			<view class="new_Price">￥{{goods_data.newPrice}}</view>
+			<view class="old_Price">￥{{goods_data.oldPrice}}</view>
 		</view>
 		<view class="title">
 			{{goods_data.msg}}
@@ -29,6 +29,7 @@
 			return {
 				pircture: [],
 				goods_data: [],
+				ProductInfoId:0,
 				infoSrc:"",
 				options: [{
 					icon: '../../static/goods_detail/service.png',
@@ -42,7 +43,7 @@
 				}, {
 					icon: '../../static/goods_detail/cart.png',
 					text: '购物车',
-					info: 2
+					info: 0
 				}],
 				buttonGroup: [{
 						text: '加入购物车',
@@ -59,12 +60,6 @@
 		},
 		methods: {
 			async getSwipers(id) { //图片轮播
-				// const res = await this.$myRequsest({ //使用封装方法
-				// 	url: '/E_Shop/Pro_details/' + id
-				// })
-				// const data = await this.$myRequsest({
-				// 	url: '/E_Shop/goods_details/' + id
-				// })
 				let res=await this.$myRequsest({
 					url:'/api/CarouselPicture/ProductDetailed',
 					data:{
@@ -74,9 +69,28 @@
 				this.pircture = res.data.productCarousel1
 				this.goods_data=res.data.getProductInfo
 				this.infoSrc=res.data.infoSrc
-				console.log(res.data)
 				// this.goods_data = data.data.data[0]
 				// console.log(this.goods_data)
+			},
+			async getCartCount(){
+				let res=await this.$myRequsest({
+					url:'/api/CarouselPicture/GetCart'
+				})
+				this.options[2].info=res.data.length
+			},
+			async addCart(ProductInfoId,Count){
+				let res=await this.$myRequsest({
+					url:'/api/CarouselPicture/PostAddCart',
+					method:"post",
+					header:{
+						'Content-type':'application/x-www-form-urlencoded',
+					},
+					data:{
+						ProductInfoId,
+						Count
+					}
+				})
+				this.getCartCount()
 			},
 			onClick(e) {
 				uni.showToast({
@@ -91,11 +105,19 @@
 			},
 			buttonClick(e) {
 				console.log(e)
-				this.options[2].info++
+				if(e.index==0){
+					this.addCart(this.ProductInfoId,1)
+				}else if(e.index==1){
+					uni.showToast({
+						title: '已购买'
+					})
+				}
 			}
 		},
 		onLoad(options) {
+			this.ProductInfoId=options.id
 			this.getSwipers(options.id)
+			this.getCartCount()
 		},
 		components: {
 			uniGoodsNav

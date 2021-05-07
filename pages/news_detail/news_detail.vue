@@ -18,22 +18,25 @@
 			return {
 				data:{
 					content:"",
-					news1:{
-						title:"数据加载中，请稍等",
-						time:""
-					}
+					news1:{}
 				}
 			}
 		},
 		methods: {
 			async getNewsDetail(id){
-				const res=await this.$myRequsest({
-					url:'/api/CarouselPicture/GetNewDetail',
-					data:{
-						id
-					}
-				})
-				this.data=res.data
+				try{
+					const res=await this.$myRequsest({
+						url:'/api/CarouselPicture/GetNewDetail',
+						data:{
+							id
+						}
+					})
+					console.log(res)
+					this.data=res.data
+				}catch(err){
+					console.log(err)
+					this.data.content="数据加载失败，请检查网络"
+				}
 			}
 		},
 		onLoad(options) {

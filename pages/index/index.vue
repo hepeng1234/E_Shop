@@ -68,7 +68,6 @@
 				let res = await this.$myRequsest({ //使用封装方法
 					url:'/api/CarouselPicture/CarouselPicture'
 				})
-				console.log(res.data)
 				this.pircture = res.data
 			},
 			async getHotGoods(pageNo,pageSize) { //商品信息
@@ -79,7 +78,7 @@
 						pageSize
 					}
 				})
-				this.count=res.data.count
+				// this.count=res.data.data.count
 				if(this.goods.length==0){
 					this.goods=res.data.info;
 				}else{

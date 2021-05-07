@@ -7,9 +7,9 @@
 			</view>
 		</scroll-view>
 		<scroll-view class="right" scroll-y>
-			<view class="item" v-for="(item,index) in urlDate" :key="index">
-				<image @click="previewImg(item.url)" :src="item.url" loop="true"></image>
-				<view>{{item.id}}</view>
+			<view v-if="ifitem" class="item" v-for="(item,index) in urlDate" :key="index">
+				<image @click="previewImg(item.pictureUrl)" :src="item.pictureUrl" loop="true"></image>
+				<view>{{item.msg}}</view>
 			</view>
 			<text v-if="!urlDate.length">暂无数据</text>
 		</scroll-view>
@@ -22,31 +22,37 @@
 			return {
 				date: [],
 				active: 0,
+				ifitem:true,
 				urlDate: []
 			}
 		},
 		methods: {
 			async getPicsCate() {
 				const res = await this.$myRequsest({
-					url: '/E_Shop/navBar_Left'
+					url: '/api/CarouselPicture/NavbarLeft'
 				})
-				this.date = res.data.data
+				console.log(res)
+				this.date = res.data
 			},
 			async leftClickHandle(index=0, item=1) {
 				this.active = index
+				this.ifitem=false
 				const res = await this.$myRequsest({
-					url: '/E_Shop/navBar_Right' + item
+					url: '/api/CarouselPicture/NavbarRight',
+					data:{
+						NavbarLeftId:item
+					}
 				})
-				this.urlDate = res.data.data
+				console.log(res)
+				this.urlDate = res.data
+				this.ifitem=true
 			},
 			previewImg(url){
-				var urls=this.urlDate.map(item=>{
-					return item.url
-				})
+				var urls=this.urlDate.map(item=>item.pictureUrl)
 				uni.previewImage({
 					current:url,
 					urls,
-					indicator:'default',
+					indicator:'number',
 					loop:true
 				})
 			}

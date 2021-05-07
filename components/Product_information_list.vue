@@ -6,8 +6,8 @@
 				{{item.msg}}
 			</view>
 			<view class="price">
-				<text>{{item.newPrice}}</text>
-				<text>{{item.oldPrice}}</text>
+				<text>￥{{item.newPrice}}</text>
+				<text>￥{{item.oldPrice}}</text>
 			</view>
 		</view>
 	</view>

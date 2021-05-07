@@ -6,6 +6,8 @@ export const myRequsest = (option) => {
 			url: BASE_URL + option.url,
 			method: option.method || 'GET',
 			data: option.data || {},
+			header:option.header||{},
+			// dataType:"json",
 			success: (res) => {
 				if (res.statusCode != 200) {
 					return uni.showToast({
@@ -16,7 +18,7 @@ export const myRequsest = (option) => {
 			},
 			fail: (err) => {
 				uni.showToast({
-					title: '请求接口失败'
+					title: '请求失败，请检查网络'
 				})
 				reject(err)
 			}

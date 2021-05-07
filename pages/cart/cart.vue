@@ -7,31 +7,31 @@
 				</view>
 				<view class="info_cen">
 					<view class="check">
-						<checkbox checked :value="item.id"></checkbox>
+						<checkbox checked :value="index|tranInt"></checkbox>
 					</view>
 					<view class="img">
-						<image :src="item.src"></image>
+						<image :src="item.pictureUrl"></image>
 					</view>
 					<view class="info_right">
 						<view class="info_right_top">
-							{{item.title}}
+							{{item.msg}}
 						</view>
 						<view class="info_right_bottom">
 							<view class="info_price">
-								￥{{item.price}}
+								￥{{item.newPrice}}
 							</view>
 							<view class="info_number">
-								<view class="info_number_reduce" v-if="!(item.proname==1)" @click="setReduce(item)">-</view>
+								<view class="info_number_reduce" v-if="!(item.count==1)" @click="setReduce(item)">-</view>
 								<view class="info_number_sel">
-									<input v-model="item.proname" />
+									<input v-model="item.count" />
 								</view>
 								<view class="info_number_plue" @click="setPlue(item)">+</view>
 							</view>
 						</view>
 					</view>
 				</view>
-				<view class="info_bottom" @click="getClear">
-					删除
+				<view class="info_bottom" @click="getClear(item)">
+					移除
 				</view>
 			</view>
 		</checkbox-group>
@@ -47,29 +47,56 @@
 		data() {
 			return {
 				data: [],
-				array: []
+				array: [],
 			}
 		},
 		methods: {
 			async getCartData() {
-				const res = await this.$myRequsest({
-					url: '/E_Shop/Cart'
+				let res = await this.$myRequsest({
+					url: '/api/CarouselPicture/GetCart'
 				})
-				this.data = res.data.data
-				// console.log(this.data)
-				this.array = res.data.data.map((e) => {
-					return parseInt(e.id)
+				this.data = res.data
+				this.array=[]
+				for (var i = 0; i < res.data.length; i++) {
+					this.array.push(i)
+				}
+			},
+			async setReduce(item) {
+				item.count -= 1
+				let res = await this.$myRequsest({
+					url: '/api/CarouselPicture/SettCartCount',
+					data:{
+						ProductInfoId:item.productInfoId,
+						Count:item.count
+					}
 				})
 			},
-			setReduce(item) {
-				item.proname -= 1
+			async setPlue(item) {
+				item.count += 1
+				let res = await this.$myRequsest({
+					url: '/api/CarouselPicture/SettCartCount',
+					data:{
+						ProductInfoId:item.productInfoId,
+						Count:item.count
+					}
+				})
 			},
-			setPlue(item) {
-				item.proname += 1
-			},
-			getClear() {
+			async getClear(item) {
+				let res = await this.$myRequsest({
+					url: '/api/CarouselPicture/GetDeleCart',
+					method:"delete",
+					header:{
+						'Content-type':'application/x-www-form-urlencoded',
+					},
+					data:{
+						Id:item.id
+					}
+				})
+				
+				this.getCartData()
+				
 				uni.showToast({
-					title: '已删除'
+					title: '已移除'
 				})
 			},
 			settlement() {
@@ -79,9 +106,13 @@
 			},
 			checkChange(e) {
 				this.array = e.detail.value.map((e) => {
-					return parseInt(e)
+					return e
 				})
-				console.log(this.array)
+			}
+		},
+		filters:{
+			tranInt(value){
+				return value.toString()
 			}
 		},
 		onLoad() {
@@ -90,13 +121,13 @@
 		created() {},
 		computed: {
 			price() {
-				let price = 0
 				let a = []
+				let price = 0
 				a = this.array.map((e) => {
 					return this.data[e]
 				})
 				a.map((value) => {
-					price += value.price * value.proname
+					price += value.newPrice * value.count
 				})
 				return price
 			}
@@ -106,7 +137,7 @@
 
 <style lang="scss">
 	.cart {
-		height: 667rpx;
+		padding-bottom: 150rpx;
 
 		.info {
 			display: flex;
