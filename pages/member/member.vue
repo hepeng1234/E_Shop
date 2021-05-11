@@ -1,8 +1,9 @@
 <template>
 	<view class="member">
 		<view class="user">
-			<image mode="aspectFill" src="https://tva2.sinaimg.cn/large/0072Vf1pgy1fodqowkp8sj31fy10hhdt.jpg"></image>
-			<text>用户123</text>
+			<image mode="aspectFill" :src="userSrc"></image>
+			<text v-show="!sign" @click="signIn">登录</text>
+			<text v-show="sign">{{user}}</text>
 		</view>
 		<view @click="scanning" class="scanningImg">
 			<image mode="aspectFit" src="../../static/member/scanning.png"></image>
@@ -33,9 +34,20 @@
 <script>
 	export default {
 		data() {
-			return {}
+			return {
+				user: "",
+				userSrc: '../../static/member/user.png',
+				sign:false
+			}
 		},
 		methods: {
+			signIn() {
+				console.log("登录")
+
+				uni.navigateTo({
+					url: '/pages/signIn/signIn'
+				})
+			},
 			setting() {
 				console.log("设置")
 				uni.navigateTo({
@@ -47,10 +59,28 @@
 				uni.scanCode({
 					scanType: ['qrCode'],
 					success: (res) => {
-						uni.showToast({title:res.scanType})
-						uni.showToast({title:res.result})
+						uni.showToast({
+							title: res.scanType
+						})
+						uni.showToast({
+							title: res.result
+						})
 					}
 				})
+			}
+		},
+		onLoad(options) {
+			try {
+				let value = uni.getStorageSync('UserName');
+				let src = uni.getStorageSync('UserPicture');
+				if (value) {
+					this.user = value
+					this.userSrc = src
+					this.sign=!this.sign
+				}
+				console.log("value中没有值")
+			} catch (e) {
+				console.log("失败")
 			}
 		}
 	}

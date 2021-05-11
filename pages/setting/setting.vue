@@ -1,8 +1,9 @@
 <template>
 	<view class="setting">
 		<view class="user">
-			<image mode="aspectFill" src="https://tva2.sinaimg.cn/large/0072Vf1pgy1fodqowkp8sj31fy10hhdt.jpg"></image>
-			<text>用户123</text>
+			<image mode="aspectFill" :src="userSrc"></image>
+			<text v-show="!sign">未登录</text>
+			<text v-show="sign">{{user}}</text>
 		</view>
 		<view class="set">
 			<view class="set_row">
@@ -22,7 +23,8 @@
 				<image src="../../static/member/arrow.png"></image>
 			</view>
 			<view class="signIn">
-				<view>退出登录</view>
+				<view v-show="sign" @click="signOut">退出登录</view>
+				<view v-show="!sign" @click="signIn">登录</view>
 			</view>
 		</view>
 	</view>
@@ -32,11 +34,37 @@
 	export default {
 		data() {
 			return {
-
+				user: '',
+				userSrc:'../../static/member/user.png',
+				sign:false
 			}
 		},
 		methods: {
-
+			signOut() {
+				uni.removeStorageSync('UserName');
+				uni.removeStorageSync('UserPicture');
+				uni.reLaunch({
+					url: '/pages/emptyIndex/emptyIndex'
+				})
+			},
+			signIn() {
+				uni.redirectTo({
+					url: '/pages/signIn/signIn'
+				})
+			}
+		},
+		onLoad(e) {
+			try {
+				let value = uni.getStorageSync('UserName');
+				let src = uni.getStorageSync('UserPicture');
+				if (value) {
+					this.user = value
+					this.userSrc=src
+					this.sign=!this.sign
+				}
+			} catch (e) {
+				console.log(e)
+			}
 		}
 	}
 </script>
