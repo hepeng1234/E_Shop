@@ -210,6 +210,7 @@
 			//#ifdef MP-WEIXIN
 			bottom: 1rpx;
 			//#endif
+			
 			//#ifndef MP-WEIXIN
 			bottom: 100rpx;
 			//#endif

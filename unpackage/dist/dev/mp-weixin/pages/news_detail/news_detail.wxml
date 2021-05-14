@@ -1,1 +1,0 @@
-<view class="news_detail"><text class="title">{{data.title}}</text><view class="info"><block wx:if="{{data.time}}"><text>{{'发表时间：'+$root.f0+''}}</text></block></view><view class="content"><rich-text nodes="{{data.content}}"></rich-text></view></view>

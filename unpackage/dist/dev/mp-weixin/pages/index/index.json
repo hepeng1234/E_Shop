@@ -1,7 +1,0 @@
-{
-  "enablePullDownRefresh": true,
-  "onReachBottomDistance": 10,
-  "usingComponents": {
-    "product-list": "/components/Product_information_list"
-  }
-}
