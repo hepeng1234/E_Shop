@@ -12,18 +12,10 @@
 	export default {
 		data() {
 			return {
-				longitude:106.220664,
-				latitude:29.545468,
+				longitude:116.397128,
+				latitude:39.916527,
 				scale:15,
-				markers:[
-					{
-						longitude:106.220664,
-						latitude:29.545468,
-						iconPath:'../../static/tabber/home(1).png',
-						width:30,
-						height:30
-					}
-				]
+				markers:[]
 			}
 		},
 		methods: {
@@ -32,6 +24,26 @@
 					phoneNumber:'123-456-7891'
 				})
 			}
+		},
+		onLoad() {
+			uni.getLocation({
+			    type: 'wgs84',
+			    success:  (res)=> {
+					this.longitude=res.longitude
+					this.latitude=res.latitude
+					this.markers=[]
+					this.markers.push({
+						longitude:res.longitude,
+						latitude:res.latitude,
+						iconPath:'../../static/tabber/home(1).png',
+						width:30,
+						height:30
+					})
+			    }
+			});
+		},
+		created(){
+			
 		}
 	}
 </script>
